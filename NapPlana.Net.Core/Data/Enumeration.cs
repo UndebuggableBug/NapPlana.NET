@@ -296,3 +296,84 @@ public enum MessageDataType
     [JsonPropertyName("file")]
     File
 }
+
+[JsonConverter(typeof(SafeJsonStringEnumConverter))]
+public enum ApiActionType
+{
+    [JsonPropertyName("none")]
+    None = -1,
+    [JsonPropertyName("send_private_msg")]
+    SendPrivateMsg = 0,
+    [JsonPropertyName("send_group_msg")]
+    SendGroupMsg = 1,
+    [JsonPropertyName("send_msg")]
+    SendMsg = 2,
+
+    [JsonPropertyName("delete_msg")]
+    DeleteMsg = 3,
+    [JsonPropertyName("get_msg")]
+    GetMsg = 4,
+    [JsonPropertyName("get_forward_msg")]
+    GetForwardMsg = 5,
+    
+    [JsonPropertyName("send_like")]
+    SendLike = 6,
+
+    [JsonPropertyName("set_group_kick")]
+    SetGroupKick = 7,
+    [JsonPropertyName("set_group_ban")]
+    SetGroupBan = 8,
+    [JsonPropertyName("set_group_whole_ban")]
+    SetGroupWholeBan = 9,
+    [JsonPropertyName("set_group_admin")]
+    SetGroupAdmin = 10,
+    [JsonPropertyName("set_group_card")]
+    SetGroupCard = 11,
+    [JsonPropertyName("set_group_name")]
+    SetGroupName = 12,
+    [JsonPropertyName("set_group_leave")]
+    SetGroupLeave = 13,
+    [JsonPropertyName("set_group_special_title")]
+    SetGroupSpecialTitle = 14,
+    [JsonPropertyName("set_friend_add_request")]
+    SetFriendAddRequest = 15,
+    [JsonPropertyName("set_group_add_request")]
+    SetGroupAddRequest = 16,
+
+    [JsonPropertyName("get_login_info")]
+    GetLoginInfo = 17,
+    [JsonPropertyName("get_stranger_info")]
+    GetStrangerInfo = 18,
+    [JsonPropertyName("get_friend_list")]
+    GetFriendList = 19,
+    [JsonPropertyName("get_group_info")]
+    GetGroupInfo = 20,
+    [JsonPropertyName("get_group_list")]
+    GetGroupList = 21,
+    [JsonPropertyName("get_group_member_info")]
+    GetGroupMemberInfo = 22,
+    [JsonPropertyName("get_group_member_list")]
+    GetGroupMemberList = 23,
+    [JsonPropertyName("get_group_honor_info")]
+    GetGroupHonorInfo = 24,
+    [JsonPropertyName("get_cookies")]
+    GetCookies = 25,
+    [JsonPropertyName("get_csrf_token")]
+    GetCsrfToken = 26,
+    [JsonPropertyName("get_credentials")]
+    GetCredentials = 27,
+    [JsonPropertyName("get_record")]
+    GetRecord = 28,
+    [JsonPropertyName("get_image")]
+    GetImage = 29,
+    [JsonPropertyName("can_send_image")]
+    CanSendImage = 30,
+    [JsonPropertyName("can_send_record")]
+    CanSendRecord = 31,
+    [JsonPropertyName("get_status")]
+    GetStatus = 32,
+    [JsonPropertyName("get_version_info")]
+    GetVersionInfo = 33,
+    [JsonPropertyName("clean_cache")]
+    CleanCache = 34
+}

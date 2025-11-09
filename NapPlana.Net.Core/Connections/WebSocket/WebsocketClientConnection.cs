@@ -1,5 +1,8 @@
-﻿using NapPlana.Core.Connections.Plugins;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using NapPlana.Core.Connections.Plugins;
 using NapPlana.Core.Data;
+using NapPlana.Core.Data.API;
 using NapPlana.Core.Event.Handler;
 using TouchSocket.Core;
 using TouchSocket.Http.WebSockets;
@@ -89,6 +92,39 @@ public class WebsocketClientConnection: ConnectionBase
         try
         {
             await _client.SendAsync(message);
+            BotEventHandler.LogReceived(LogLevel.Debug, $"已发送消息: {message}");
+        }
+        catch (Exception ex)
+        {
+            BotEventHandler.LogReceived(LogLevel.Error, $"发送消息失败: {ex.Message}");
+        }
+    }
+
+    public override async Task SendMessageAsync(ApiActionType actionType,object message,string echo)
+    {
+        if (_client == null)
+        {
+            BotEventHandler.LogReceived(LogLevel.Error, "无法发送消息，WebSocket未初始化");
+            return;
+        }
+
+        if (string.IsNullOrEmpty(echo))
+        {
+            BotEventHandler.LogReceived(LogLevel.Error, "无法发送消息，WebSocket模式下Echo字段不可为空");
+            return;
+        }
+        //构造GlobalRequest
+        var req = new WsGlobalRequest()
+        {
+            Action = actionType,
+            Params = message,
+            Echo = echo
+        };
+        var mess = JsonSerializer.Serialize(req);
+        
+        try
+        {
+            await _client.SendAsync(mess);
             BotEventHandler.LogReceived(LogLevel.Debug, $"已发送消息: {message}");
         }
         catch (Exception ex)

@@ -6,6 +6,7 @@ using TouchSocket.Core;
 using TouchSocket.Http;
 using TouchSocket.Http.WebSockets;
 using LogLevel = NapPlana.Core.Data.LogLevel;
+using NapPlana.Core.API;
 
 namespace NapPlana.Core.Connections.Plugins;
 
@@ -27,9 +28,15 @@ public class WebSocketMessageReceiverPlugin: PluginBase, IWebSocketReceivedPlugi
                 if (doc.RootElement.TryGetProperty("retcode", out _))
                 {
                     var actionResponse = JsonSerializer.Deserialize<ActionResponse>(text);
-                    if (actionResponse != null && actionResponse.RetCode != 0)
+                    if (actionResponse != null)
                     {
-                        BotEventHandler.LogReceived(LogLevel.Error,$"动作失败: {actionResponse.RetCode} - {actionResponse.Message}");
+                        if (actionResponse.RetCode != 0)
+                        {
+                            BotEventHandler.LogReceived(LogLevel.Error,$"动作失败: {actionResponse.RetCode} - {actionResponse.Message}");
+                        }
+                        // 将动作响应加入可消费队列
+                        _ = ApiHandler.AddResponseAsync(actionResponse);
+                        // 不向事件解析器传递动作响应文本
                         return EasyTask.CompletedTask;
                     }
                 }

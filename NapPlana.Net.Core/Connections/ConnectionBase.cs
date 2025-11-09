@@ -34,6 +34,11 @@ public class ConnectionBase: IConnectionBase
         await Task.CompletedTask;
     }
     
+    public virtual async Task SendMessageAsync(ApiActionType actionType,object message,string echo)
+    {
+        await Task.CompletedTask;
+    }
+    
     /// <summary>
     /// 发送消息时调用
     /// </summary>

@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using System.Text.Json;
+using NapPlana.Core.Data.API;
 
 namespace NapPlana.Core.Data.Action;
 
@@ -13,18 +14,14 @@ public class ActionResponse
     [JsonPropertyName("message")]
     public string Message { get; set; } = string.Empty;
     [JsonPropertyName("data")]
-    public object Data { get; set; } = new { };
+    public object Data { get; set; } = new( );
     [JsonPropertyName("wording")]
     public string Wording { get; set; } = string.Empty;
     [JsonPropertyName("echo")]
     public string Echo { get; set; } = string.Empty;
     
-    public T? GetData<T>()
+    public T? GetData<T>() where T : ResponseDataBase
     {
-        if (Data is null)
-        {
-            return default;
-        }
         if (Data is T t)
         {
             return t;

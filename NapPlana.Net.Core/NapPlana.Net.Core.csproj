@@ -9,7 +9,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="API\" />
       <Folder Include="Connections\Http\" />
     </ItemGroup>
 
