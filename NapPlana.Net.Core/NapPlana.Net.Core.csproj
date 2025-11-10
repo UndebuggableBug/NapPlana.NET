@@ -15,6 +15,7 @@
         <PackageProjectUrl>https://github.com/stevesensei/NapPlana.NET</PackageProjectUrl>
         <RepositoryUrl>https://github.com/stevesensei/NapPlana.NET</RepositoryUrl>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <PackageLicenseUrl>https://www.apache.org/licenses/LICENSE-2.0.txt</PackageLicenseUrl>
     </PropertyGroup>
 
     <ItemGroup>
