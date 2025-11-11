@@ -28,6 +28,8 @@ _logo artwork by: [芋泥雪糕喵](https://www.mihuashi.com/profiles/155732?rol
 
 只能说这是本人 ~~(某神人档p)~~ 的奇妙趣味，以及我正在开发的机器人叫PlanaBot，这个框架原本是给这个机器人用的，但我找了一圈没在github上找到完成度比较高的实现，所以我把自己写的开源了。
 
+如需快速开始请查看[文档](https://nap.stevesensei.work/)
+
 ## 快速开始
 
 ### 前置条件
