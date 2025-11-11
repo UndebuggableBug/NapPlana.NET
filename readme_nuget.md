@@ -1,4 +1,4 @@
-![nuget](https://i.imgur.com/53CmM9e.png)
+![nuget](https://i.imgur.com/p7pBCgg.png)
 # NapPlana.NET
 
 _Yet Another NapCat Framework SDK for .NET_

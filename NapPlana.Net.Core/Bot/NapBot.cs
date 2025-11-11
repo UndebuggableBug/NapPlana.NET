@@ -8,6 +8,7 @@ namespace NapPlana.Core.Bot;
 public class NapBot
 {
     private ConnectionBase _connection;
+    public  long SelfId = 0;
     
     public NapBot()
     {
@@ -16,9 +17,10 @@ public class NapBot
     }
 
     // Added: constructor that accepts a connection
-    public NapBot(ConnectionBase connection)
+    public NapBot(ConnectionBase connection,long selfId)
     {
         _connection = connection;
+        SelfId = selfId;
     }
 
     // Added: fluent setter for the connection
@@ -32,6 +34,14 @@ public class NapBot
     public Task StartAsync() => _connection.InitializeAsync();
     public Task StopAsync() => _connection.ShutdownAsync();
     
+    /// <summary>
+    /// 发送群消息
+    /// </summary>
+    /// <param name="groupMessage">请求</param>
+    /// <returns>响应</returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="TimeoutException"></exception>
     public async Task<GroupMessageSendResponseData> SendGroupMessageAsync(GroupMessageSend groupMessage)
     {
         if (groupMessage is null) throw new ArgumentNullException(nameof(groupMessage));
@@ -64,6 +74,13 @@ public class NapBot
         throw new TimeoutException("Timed out waiting for send_group_msg response.");
     }
     
+    /// <summary>
+    /// 发送戳一戳消息
+    /// </summary>
+    /// <param name="pokeMessage">信息结构</param>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="TimeoutException"></exception>
     public async Task SendPokeAsync(PokeMessageSend pokeMessage)
     {
         if (pokeMessage is null) throw new ArgumentNullException(nameof(pokeMessage));

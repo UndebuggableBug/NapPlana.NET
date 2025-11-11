@@ -9,6 +9,7 @@ public class BotFactory
     private int _port = 0;
     private string? _token;
     private BotConnectionType _connectionType = BotConnectionType.WebSocketClient;
+    private long _selfId;
 
     private BotFactory() {}
 
@@ -18,6 +19,12 @@ public class BotFactory
     public BotFactory SetIp(string ip)
     {
         _ip = ip;
+        return this;
+    }
+    
+    public BotFactory SetSelfId(long selfId)
+    {
+        _selfId = selfId;
         return this;
     }
 
@@ -50,6 +57,6 @@ public class BotFactory
             BotConnectionType.WebSocketClient => new WebsocketClientConnection(_ip, _port, _token),
             _ => throw new NotSupportedException("不支持的连接类型"),
         };
-        return new NapBot(connection);
+        return new NapBot(connection,_selfId);
     }
 }

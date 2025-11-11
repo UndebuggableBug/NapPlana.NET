@@ -1,31 +1,57 @@
 ﻿using NapPlana.Core.Bot;
 using NapPlana.Core.Data;
-using NapPlana.Core.Data.API;
-using NapPlana.Core.Data.Message;
 using NapPlana.Core.Event.Handler;
-using System.IO; // for FileStream, File, Path
+using NapPlana.Example.Examples;
+using Microsoft.Extensions.Configuration;
+
+// Load configuration
+// Ensure you have an appsettings.json file in the output directory with the necessary settings
+// Rename Example appsettings_example.json to appsettings.json and fill in your details
+var config = new ConfigurationBuilder()
+    .SetBasePath(AppContext.BaseDirectory)
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .Build();
+
+var napCatSection = config.GetSection("NapCatConfig");
+var botSection = config.GetSection("BotConfig");
+
+var ip = napCatSection.GetValue<string>("IP");
+var port = napCatSection.GetValue<int>("Port");
+var token = napCatSection.GetValue<string>("Token");
+var selfId = botSection.GetValue<long>("SelfId");
 
 var bot = BotFactory
     .Create()
-    .SetConnectionType(BotConnectionType.WebSocketClient)
-    .SetIp("172.17.21.238")
-    .SetPort(6100)
-    .SetToken("plana-bot")
+    .SetSelfId(selfId)// Your bot QQ ID
+    .SetConnectionType(BotConnectionType.WebSocketClient)// Set connection type,only this mode is supported now
+    .SetIp(ip ?? "127.0.0.1") // Your napcat server IP
+    .SetPort(port)// Your napcat server port
+    .SetToken(token)// Your napcat token
     .Build();
+// Log handler
 BotEventHandler.OnLogReceived += (level, message) =>
 {
-    if (level == LogLevel.Debug)
+    // Print log to console,you can integrate with your own logging system
+    Console.WriteLine($"[{level}] {message}");
+};
+
+// Start the bot
+await bot.StartAsync();
+
+// Example usage: Poke back when poked
+BotEventHandler.OnGroupPokeNoticeReceived += async (notice) =>
+{
+    //exclude self poke
+    if (notice.UserId == bot.SelfId)
     {
         return;
     }
-    Console.WriteLine($"[{level}] {message}");
-};
-BotEventHandler.OnMessageSentGroup += (eventData) =>
-{
-    Console.WriteLine($"消息类型 {eventData.MessageType}, 消息ID: {eventData.MessageId}");
+
+    await PokeBack.ExecuteAsyncGroup(bot, notice.GroupId.ToString(), notice.UserId.ToString());
 };
 
-
+// Graceful shutdown on Ctrl+C
+// Prevent the process from terminating immediately
 var cts = new CancellationTokenSource();
 Console.CancelKeyPress += async (s, e) =>
 {
@@ -34,38 +60,11 @@ Console.CancelKeyPress += async (s, e) =>
     cts.Cancel();
 };
 
-await bot.StartAsync();
-
-// 发送信息测试（包含 FileStream -> base64 图片示例）
-var builder = MessageChainBuilder.Create()
-    .AddMentionMessage("2058557339")
-    .AddTextMessage("请输入文本");
-
-// 示例图片路径：将图片文件放到输出目录并命名为 image.png，或修改此路径
-var imagePath = Path.Combine(AppContext.BaseDirectory, "image.png");
-if (File.Exists(imagePath))
-{
-    using var fs = File.OpenRead(imagePath);
-    builder.AddImageMessage(fs);
-}
-else
-{
-    Console.WriteLine($"未找到图片文件: {imagePath}，将仅发送文本消息。");
-}
-
-var message = builder.Build();
-
-var res  = await bot.SendGroupMessageAsync(new GroupMessageSend()
-{
-    GroupId = "769372512",
-    Message = message
-});
-
-Console.WriteLine(res.MessageId);
 try
 {
     await Task.Delay(Timeout.Infinite, cts.Token);
 }
 catch (TaskCanceledException)
 {
+
 }

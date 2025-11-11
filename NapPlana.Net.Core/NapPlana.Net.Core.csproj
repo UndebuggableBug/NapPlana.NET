@@ -16,7 +16,8 @@
         <RepositoryUrl>https://github.com/stevesensei/NapPlana.NET</RepositoryUrl>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseUrl>https://www.apache.org/licenses/LICENSE-2.0.txt</PackageLicenseUrl>
-        <PackageIcon>logo.png</PackageIcon>
+        <PackageIcon>nap_plana.png</PackageIcon>
+        <Copyright>CopyRight © 2025 stevesensei All Rights.</Copyright>
     </PropertyGroup>
 
     <ItemGroup>
@@ -29,9 +30,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="logo.png">
+      <None Update="nap_plana.png">
         <Pack>True</Pack>
         <PackagePath></PackagePath>
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       </None>
     </ItemGroup>
 

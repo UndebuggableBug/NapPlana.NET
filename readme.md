@@ -1,4 +1,4 @@
-<p align="center"><a href="https://blog.stevesensei.work" target="_blank" rel="noopener noreferrer"><img width="150" src="https://moss-1309278520.cos.ap-shanghai.myqcloud.com/plana.gif" alt=""></a></p>
+<p align="center"><a href="https://blog.stevesensei.work" target="_blank" rel="noopener noreferrer"><img width="350" src="https://moss-1309278520.cos.ap-shanghai.myqcloud.com/nap_plana.png" alt=""></a></p>
 
 <div align="center">
 
