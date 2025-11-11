@@ -16,12 +16,20 @@
         <RepositoryUrl>https://github.com/stevesensei/NapPlana.NET</RepositoryUrl>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseUrl>https://www.apache.org/licenses/LICENSE-2.0.txt</PackageLicenseUrl>
-        <PackageIcon>nap_plana.png</PackageIcon>
+        <PackageIcon>nap_plana.jpeg</PackageIcon>
         <Copyright>CopyRight © 2025 stevesensei All Rights.</Copyright>
+        <PackageReadmeFile>readme_nuget.md</PackageReadmeFile>
     </PropertyGroup>
 
     <ItemGroup>
       <Folder Include="Connections\Http\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\readme_nuget.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
@@ -30,10 +38,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="nap_plana.png">
+      <None Update="nap_plana.jpeg">
         <Pack>True</Pack>
-        <PackagePath></PackagePath>
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        <PackagePath>\</PackagePath>
       </None>
     </ItemGroup>
 
