@@ -63,19 +63,21 @@ jobs:
 
       - name: Fill tag version into Doxyfile
         if: steps.tag_check.outputs.on_master == 'true'
+        working-directory: api-doc
         run: |
           TAG="${{ steps.tag_check.outputs.tag_name }}"
           # Escape sed replacement sensitive chars (/ and &)
           ESCAPED_TAG=$(printf '%s' "$TAG" | sed -e 's/[\/&]/\\&/g')
-          sed -i "s/{{package_version}}/${ESCAPED_TAG}/g" api-doc/Doxyfile
+          sed -i "s/{{package_version}}/${ESCAPED_TAG}/g" Doxyfile
           echo "Injected version '${TAG}' into Doxyfile"
 
       - name: Build Doxygen documentation
         if: steps.tag_check.outputs.on_master == 'true'
+        working-directory: api-doc
         run: |
           set -e
-          doxygen api-doc/Doxyfile || { echo 'Doxygen generation failed'; exit 1; }
-          if [ ! -d api-doc/html ]; then
+          doxygen Doxyfile || { echo 'Doxygen generation failed'; exit 1; }
+          if [ ! -d html ]; then
             echo 'Expected output directory api-doc/html not found'; exit 2; fi
           echo 'Doxygen docs generated successfully.'
 
